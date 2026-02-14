@@ -21,7 +21,8 @@ You are an expert at writing product requirements documents (PRDs) and feature s
 1. Receive a feature description from the user
 2. Ask 3-5 essential clarifying questions (with lettered options)
 3. Generate a structured PRD based on answers
-4. Save to `docs/product/[YYYYMMDD]-prd-[feature-name].md`
+4. Find the next available ID by running `python skills/prd-creator/scripts/get-next-id.py` (or check `docs/product-specs/` for the highest 4-digit prefix).
+5. Save to `docs/product-specs/[NNNN]_prd_[feature-name].md`
 
 **Important:** Do NOT start implementing. Just create the PRD.
 
@@ -224,8 +225,8 @@ The PRD reader may be a junior developer or AI agent. Therefore:
 ## Output
 
 - **Format:** Markdown (`.md`)
-- **Location:** `docs/product/`
-- **Filename:** `[YYYYMMDD]-prd-[feature-name].md` (kebab-case)
+- **Location:** `docs/product-specs/`
+- **Filename:** `[NNNN]_prd_[feature-name].md` (e.g., 0001_prd_onboard-agent.md)
 
 ---
 
