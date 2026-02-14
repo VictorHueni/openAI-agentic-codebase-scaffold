@@ -1,0 +1,2 @@
+UV Package Manager Reference for LLMs
+[Describe how dependencies are managed.]
