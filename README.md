@@ -1,6 +1,6 @@
 # Harness Engineering Scaffold Guide
 
-This repository follows the **Agent-First Engineering** principles outlined by OpenAI in [Harness Engineering](https://openai.com/index/harness-engineering/). The core engine of this workflow is the **Ralph Loop** (or "Ralph Wiggum Loop").
+This repository follows the **Agent-First Engineering** principles outlined by OpenAI in [Harness Engineering](https://openai.com/index/harness-engineering/). The core engine of this workflow is the **Ralph Loop** (or "Ralph Wiggum Loop"), as explored by [Geoffrey Huntley](https://ghuntley.com/loop/).
 
 ## Root Level Guidance
 - **AGENTS.md**: The primary entry point for AI. Define the mission, specific tool directives, and a "how-to" for the codebase.
@@ -29,6 +29,23 @@ Humans interact with this system primarily through prompts and architectural con
 4. **Completion**: The loop terminates only when all agent reviewers and quality checks (defined in `QUALITY_SCORE.md`) are satisfied.
 
 The goal is to maximize **Agent Legibility**—ensuring that an AI agent can understand the entire domain, architecture, and intent of the project directly from the repository.
+
+### Legibility & Autonomy Stack
+To allow agents to be as autonomous as possible and control their results, the developer must provide the "Sensory Input" and "Mechanical Control" necessary for the agent to observe and interact with the running application.
+
+#### 1. Sensory Input (The "Eyes")
+*   **Chrome DevTools Bridge**: Use Playwright or Puppeteer to allow the agent to inspect the UI, capture screenshots, and read console logs.
+*   **Observability (OpenTelemetry)**: Integrate traces and logs that the agent can query to debug complex failures autonomously.
+*   **Log Aggregation**: Provide a standardized way for agents to tail and parse application logs in real-time.
+
+#### 2. Mechanical Control (The "Hands")
+*   **CLI Integration**: Ensure all core tasks (database migrations, deployments, tests) are executable via clean, documented CLI commands.
+*   **Isolated Previews**: Automate the creation of sandbox environments where agents can verify their changes before opening a PR.
+*   **Snapshot Verification**: Implement visual and data regression testing that agents can run locally to satisfy quality invariants.
+
+#### 3. Intellectual Context (The "Mind")
+*   **Dependency Mapping**: Provide scripts that generate visual or text-based dependency graphs to help agents map the architecture.
+*   **Schema Reflection**: Automatically maintain up-to-date documentation of database schemas, API contracts, and state machines in `/docs/generated/`.
 
 ## Developer Instructions
 1. **Initialize the Mission**: Fill out `AGENTS.md` with your project's specific goals.
