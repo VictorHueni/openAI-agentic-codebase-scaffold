@@ -17,6 +17,14 @@ Operate autonomously within the **Ralph Loop** to drive tasks from intent to com
 [Guide the agent on where to find types, logic, and tests.]
 1. **Perceive**: Read `docs/product-specs/` and `docs/exec-plans/active/` to understand the current mission.
 2. **Understand Laws**: Consult `ARCHITECTURE.md` for dependency rules and `QUALITY_SCORE.md` for the definition of "Done."
-3. **Execute**: Implement the change in small increments.
+3. **Leverage Skills**: Check the `/skills` directory for specialized capabilities. Each skill folder contains a `SKILL.md` (metadata & instructions) and a `scripts/` folder (logic).
+4. **Execute**: Implement the change in small increments.
+
+## Repository-Embedded Skills (/skills)
+- **Convention**: Each skill is a folder containing a `SKILL.md`.
+- **Two Skill Types**:
+    1. **Instructional Skills**: Prompt-based strategies. Follow the rules in `SKILL.md` using your internal capabilities (e.g., `prd-creator`).
+    2. **Executable Skills**: Script-based tools. Run the logic in the `scripts/` folder (if present).
+- **Discovery**: Read `SKILL.md` metadata (YAML) to determine if a skill applies to your current task.
 4. **Verify**: Run the full verification suite (`npm test`, `lint`, etc.).
 5. **Close the Loop**: Once all checks pass and the agent-review is satisfied, open a PR or update the execution plan to `completed`.
