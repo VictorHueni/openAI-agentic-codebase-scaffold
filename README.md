@@ -47,6 +47,18 @@ To allow agents to be as autonomous as possible and control their results, the d
 *   **Dependency Mapping**: Provide scripts that generate visual or text-based dependency graphs to help agents map the architecture.
 *   **Schema Reflection**: Automatically maintain up-to-date documentation of database schemas, API contracts, and state machines in `/docs/generated/`.
 
+### Knowledge Base & Mechanical Enforcement
+OpenAI enforces documentation quality **mechanically**. To prevent "Documentation Rot," the following strategies are recommended for any repository built on this scaffold:
+
+1.  **Documentation Linters**: Implement CI jobs that validate your markdown. Use tools like `markdownlint` or custom scripts to ensure all files in `/docs` are correctly cross-linked and follow the structure defined in `AGENTS.md`.
+2.  **Architectural Unit Tests**: Create tests that use `grep` or AST parsers to ensure the code follows the "Laws" in `ARCHITECTURE.md`. For example, a test should fail if a UI component tries to import directly from the Database layer.
+3.  **The "Doc-Gardening" Agent**: Schedule a recurring background task (e.g., via GitHub Actions) that:
+    *   Scans `docs/exec-plans/active/` for stale tasks.
+    *   Compares `docs/generated/db-schema.md` against the actual DB to find discrepancies.
+    *   Opens "Fix-up" Pull Requests when documentation no longer reflects code behavior.
+4.  **Remediation Instructions**: When a linter fails, the error message should include the *exact* command the agent needs to run to fix it. This is injected into the agent's context during the Ralph Loop.
+5.  **Elevate to Code**: If a documentation rule is repeatedly ignored or misunderstood by agents, stop writing it in markdown and start enforcing it in the code or a custom linter.
+
 ## Developer Instructions
 1. **Initialize the Mission**: Fill out `AGENTS.md` with your project's specific goals.
 2. **Set the Laws**: Define your dependency layers in `ARCHITECTURE.md`.
