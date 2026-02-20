@@ -6,6 +6,9 @@
 .bolt/
 .copilot-instructions/
 
+# --- Scaffold Development (not shipped to users) ---
+scaffold-dev/
+
 # ---IDE ---
 .vscode/
 .idea/

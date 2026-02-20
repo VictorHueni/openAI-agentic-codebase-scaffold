@@ -20,6 +20,16 @@ Operate autonomously within the **Ralph Loop** to drive tasks from intent to com
 3. **Leverage Skills**: Check the `/skills` directory for specialized capabilities. Each skill folder contains a `SKILL.md` (metadata & instructions) and a `scripts/` folder (logic).
 4. **Execute**: Implement the change in small increments.
 
+## Scaffold Development Mode
+> **Conditional**: This section only applies if the `scaffold-dev/` folder exists in the repo root.
+
+When `scaffold-dev/` is present, you are working on the scaffold template itself, not a user project. Route all documentation accordingly:
+- Save PRDs to `scaffold-dev/product-specs/` (not `docs/product-specs/`)
+- Save exec plans to `scaffold-dev/exec-plans/active/` (not `docs/exec-plans/active/`)
+- Save design docs to `scaffold-dev/design-docs/` (not `docs/design-docs/`)
+- The `/docs/` folder is the **clean template** shipped to users — do not put scaffold build artifacts there.
+- The `scaffold-dev/` folder mirrors `/docs/` structure exactly.
+
 ## Repository-Embedded Skills (/skills)
 - **Convention**: Each skill is a folder containing a `SKILL.md`.
 - **Two Skill Types**:
