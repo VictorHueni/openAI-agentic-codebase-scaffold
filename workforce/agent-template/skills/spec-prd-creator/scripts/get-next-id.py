@@ -4,7 +4,7 @@ from pathlib import Path
 
 def get_next_id(directory="docs/product-specs"):
     # Ensure we search relative to the project root
-    # assuming this script is in skills/prd-creator/scripts/
+    # assuming this script is in skills/spec-prd-creator/scripts/
     root = Path(__file__).resolve().parent.parent.parent.parent
     path = root / directory
     

@@ -6,6 +6,9 @@
 .bolt/
 .copilot-instructions/
 
+CLAUDE.md
+GEMINI.md
+
 # --- Scaffold Development (not shipped to users) ---
 scaffold-dev/
 

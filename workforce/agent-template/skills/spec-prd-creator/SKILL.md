@@ -1,5 +1,5 @@
 ---
-name: prd-creator
+name: spec-prd-creator
 description: "Generate a Product Requirements Document (PRD) for a new feature. Use when planning a feature, starting a new project, or when asked to create a PRD. Triggers on: create a prd, write prd for, plan this feature, requirements for, spec out."
 version: "1.0.0"
 user-invocable: true
@@ -21,7 +21,7 @@ You are an expert at writing product requirements documents (PRDs) and feature s
 1. Receive a feature description from the user
 2. Ask 3-5 essential clarifying questions (with lettered options)
 3. Generate a structured PRD based on answers
-4. Find the next available ID by running `python skills/prd-creator/scripts/get-next-id.py` (or check `docs/product-specs/` for the highest 4-digit prefix).
+4. Find the next available ID by running `python skills/spec-prd-creator/scripts/get-next-id.py` (or check `docs/product-specs/` for the highest 4-digit prefix).
 5. Save to `docs/product-specs/[NNNN]_prd_[feature-name].md`
 
 **Important:** Do NOT start implementing. Just create the PRD.
@@ -204,7 +204,7 @@ Metrics that take time to develop (weeks to months):
 - Define the measurement method: what tool, what query, what time window
 - Specify when you will evaluate: 1 week, 1 month, 1 quarter post-launch
 
-### 9. Open Questions
+### 8. Open Questions
 
 Remaining questions or areas needing clarification.
 
@@ -239,4 +239,4 @@ Before saving the PRD:
 - [ ] User stories are small and specific
 - [ ] Functional requirements are numbered and unambiguous
 - [ ] Non-goals section defines clear boundaries
-- [ ] Saved to `tasks/prd-[feature-name].md`
+- [ ] Saved to `docs/product-specs/[NNNN]_prd_[feature-name].md`
