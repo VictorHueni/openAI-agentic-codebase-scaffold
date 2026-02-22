@@ -7,7 +7,7 @@ Reference: `docs/product-specs/0001_prd_onboard-agent.md`
 Architecture constraints: `ARCHITECTURE.md`
 
 Principles:
-1. **Source of Truth**: `harness/harness/workforce/templates/` for agent templates and `harness/workforce/agent-template/skills/` for skills.
+1. **Source of Truth**: `harness/workforce/templates/` for agent templates and `harness/workforce/agent-template/skills/` for skills.
 2. **Atomic Onboarding**: An agent is either fully provisioned or unchanged.
 3. **Mechanical Safety**: Managed output is explicitly header-tagged.
 4. **Idempotence**: Repeated `hire`/`fire` runs should converge safely.
@@ -18,30 +18,30 @@ Principles:
 
 ### Increment 01: Workforce Templates Scaffolding
 Scope:
-1. Ensure `harness/harness/workforce/templates/` exists.
+1. Ensure `harness/workforce/templates/` exists.
 2. Create `gemini`, `claude`, and `github-copilot` template folders.
 3. Add `manifest.yaml` and `AGENTS.md` to each folder.
 
 Primary files:
-1. `harness/harness/workforce/templates/gemini/manifest.yaml`
-2. `harness/harness/workforce/templates/gemini/AGENTS.md`
-3. `harness/harness/workforce/templates/claude/manifest.yaml`
-4. `harness/harness/workforce/templates/claude/AGENTS.md`
-5. `harness/harness/workforce/templates/github-copilot/manifest.yaml`
-6. `harness/harness/workforce/templates/github-copilot/AGENTS.md`
+1. `harness/workforce/templates/gemini/manifest.yaml`
+2. `harness/workforce/templates/gemini/AGENTS.md`
+3. `harness/workforce/templates/claude/manifest.yaml`
+4. `harness/workforce/templates/claude/AGENTS.md`
+5. `harness/workforce/templates/github-copilot/manifest.yaml`
+6. `harness/workforce/templates/github-copilot/AGENTS.md`
 
 Test gate:
 1. `Get-ChildItem harness/workforce/templates -Recurse -File`
 
 ### Increment 02: CLI Entry Points (`hire` and `fire`)
 Scope:
-1. Create `harness/harness/scripts/workforce.py`.
+1. Create `harness/scripts/workforce.py`.
 2. Implement argument parsing for `hire <agent>` and `fire <agent>`.
 3. Validate agent template existence and required manifest keys.
 4. Support `--dry-run`.
 
 Primary files:
-1. `harness/harness/scripts/workforce.py`
+1. `harness/scripts/workforce.py`
 
 Test gate:
 1. `python -m py_compile harness/scripts/workforce.py`
@@ -55,7 +55,7 @@ Scope:
 3. If present, remove recursively (or log action in dry-run).
 
 Primary files:
-1. `harness/harness/scripts/workforce.py`
+1. `harness/scripts/workforce.py`
 
 Test gate:
 1. `python harness/scripts/workforce.py fire gemini --dry-run`
@@ -68,7 +68,7 @@ Scope:
 4. Run manifest-defined native init command when configured.
 
 Primary files:
-1. `harness/harness/scripts/workforce.py`
+1. `harness/scripts/workforce.py`
 
 Test gate:
 1. `python harness/scripts/workforce.py hire gemini --dry-run`
@@ -80,8 +80,8 @@ Scope:
 3. Prepend `<!-- AUTO-GENERATED: DO NOT EDIT -->`.
 
 Primary files:
-1. `harness/harness/scripts/workforce.py`
-2. `harness/harness/workforce/templates/*/AGENTS.md`
+1. `harness/scripts/workforce.py`
+2. `harness/workforce/templates/*/AGENTS.md`
 
 Test gate:
 1. `python harness/scripts/workforce.py hire gemini --dry-run`
@@ -93,7 +93,7 @@ Scope:
 3. Ensure sync step runs after target folder setup.
 
 Primary files:
-1. `harness/harness/scripts/workforce.py`
+1. `harness/scripts/workforce.py`
 2. `harness/workforce/agent-template/skills/*`
 
 Test gate:

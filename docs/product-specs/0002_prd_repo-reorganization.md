@@ -1,7 +1,7 @@
 # PRD: Repository Reorganization — Fully Meta Harness Structure
 
 **Date:** 2026-02-22
-**Status:** Draft
+**Status:** Complete
 **Target:** Scaffold Maintainers and AI Agents
 
 ---
@@ -38,28 +38,28 @@ Users who clone the repo cannot easily extract just the portable template. Contr
 **Description:** As a developer starting a new project, I copy `harness/` from this repo into my project root and it works immediately without editing any internal paths.
 
 **Acceptance Criteria:**
-- [ ] `harness/` contains all governance templates, docs engine, workforce system, and scripts.
-- [ ] `grep -rn "\.\.\/" harness/` only matches `workforce/templates/*/AGENTS.md` (intentional deploy-outside references).
-- [ ] `python harness/scripts/workforce.py hire claude --dry-run` works from one directory above harness/.
+- [x] `harness/` contains all governance templates, docs engine, workforce system, and scripts.
+- [x] `grep -rn "\.\.\/" harness/` only matches `workforce/templates/*/AGENTS.md` (intentional deploy-outside references).
+- [x] `python harness/scripts/workforce.py hire claude --dry-run` works from one directory above harness/.
 
 ### US-002: Scaffold Dogfooding
 
 **Description:** As a scaffold contributor, I see the repo itself following the harness pattern — root governance files reference `docs/` for working specs and plans.
 
 **Acceptance Criteria:**
-- [ ] Root `AGENTS.md` is scaffold-specific (mission: build the harness).
-- [ ] Root `docs/` contains scaffold PRDs and exec plans (visible in git, not gitignored).
-- [ ] `scaffold-dev/` no longer exists.
-- [ ] `.gitignore` no longer lists `scaffold-dev/`.
+- [x] Root `AGENTS.md` is scaffold-specific (mission: build the harness).
+- [x] Root `docs/` contains scaffold PRDs and exec plans (visible in git, not gitignored).
+- [x] `scaffold-dev/` no longer exists.
+- [x] `.gitignore` no longer lists `scaffold-dev/`.
 
 ### US-003: Clean Separation
 
 **Description:** As a contributor, I can clearly distinguish scaffold governance (root) from the template product (harness/).
 
 **Acceptance Criteria:**
-- [ ] Root governance files have scaffold-specific content (not template stubs).
-- [ ] `harness/` governance files are clean templates for end users to fill in.
-- [ ] `README.md` explains the two-layer structure.
+- [x] Root governance files have scaffold-specific content (not template stubs).
+- [x] `harness/` governance files are clean templates for end users to fill in.
+- [x] `README.md` explains the two-layer structure.
 
 ---
 
