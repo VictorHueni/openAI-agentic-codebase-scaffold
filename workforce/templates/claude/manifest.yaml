@@ -1,0 +1,5 @@
+agent_name: claude
+context_folder: .claude
+primary_file: CLAUDE.md
+native_init: none
+skills_library_sync: copy

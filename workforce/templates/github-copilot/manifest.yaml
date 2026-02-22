@@ -1,0 +1,5 @@
+agent_name: github-copilot
+context_folder: .copilot-instructions
+primary_file: AGENTS.md
+native_init: none
+skills_library_sync: copy

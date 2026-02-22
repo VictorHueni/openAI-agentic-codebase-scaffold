@@ -1,0 +1,5 @@
+agent_name: gemini
+context_folder: .gemini
+primary_file: GEMINI.md
+native_init: gemini /init
+skills_library_sync: copy
