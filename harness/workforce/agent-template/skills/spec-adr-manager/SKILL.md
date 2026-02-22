@@ -27,7 +27,6 @@ Use this skill to produce ADRs that are explicit, auditable, and easy to revisit
 
 3. Apply repository conventions first, then MADR structure.
 - Default location: `docs/design-docs/architecture-decisions/`.
-- If `scaffold-dev/` exists and the task is scaffold development, use `scaffold-dev/design-docs/architecture-decisions/` instead of `docs/`.
 - If ADR numbering exists, continue the numbering pattern.
 - If the repo already has ADR style/location conventions, preserve those while ensuring MADR-quality decision content.
 
