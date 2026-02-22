@@ -10,7 +10,8 @@ import sys
 from pathlib import Path
 from typing import Dict, Tuple
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent          # harness/
+REPO_ROOT = ROOT.parent                                 # project root (one level above harness/)
 TEMPLATES_DIR = ROOT / "workforce" / "templates"
 SKILLS_SOURCE_DIR = ROOT / "workforce" / "agent-template" / "skills"
 AUTO_HEADER = "<!-- AUTO-GENERATED: DO NOT EDIT -->"
@@ -59,7 +60,7 @@ def resolve_target_dir(manifest: Dict[str, str]) -> Path:
     folder = manifest["context_folder"].strip()
     if not folder:
         raise WorkforceError("Manifest field `context_folder` cannot be empty")
-    return ROOT / folder
+    return REPO_ROOT / folder
 
 
 def run_native_init(command: str, dry_run: bool) -> None:
@@ -68,7 +69,7 @@ def run_native_init(command: str, dry_run: bool) -> None:
     if dry_run:
         print(f"[dry-run] would run native init: {command}")
         return
-    completed = subprocess.run(command, shell=True, cwd=ROOT, check=False)
+    completed = subprocess.run(command, shell=True, cwd=REPO_ROOT, check=False)
     if completed.returncode != 0:
         print(
             f"warning: native init command exited with code {completed.returncode}: {command}",
