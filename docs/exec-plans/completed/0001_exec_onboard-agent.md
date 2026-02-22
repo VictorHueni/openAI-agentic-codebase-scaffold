@@ -3,11 +3,11 @@
 ## Summary
 Deliver a deterministic onboarding CLI that provisions local agent folders from templates and safely removes them when offboarded.
 
-Reference: `scaffold-dev/product-specs/0001_prd_onboard-agent.md`  
-Architecture constraints: `scaffold-dev/ARCHITECTURE.md`
+Reference: `docs/product-specs/0001_prd_onboard-agent.md`  
+Architecture constraints: `ARCHITECTURE.md`
 
 Principles:
-1. **Source of Truth**: `workforce/templates/` for agent templates and `workforce/agent-template/skills/` for skills.
+1. **Source of Truth**: `harness/harness/workforce/templates/` for agent templates and `harness/workforce/agent-template/skills/` for skills.
 2. **Atomic Onboarding**: An agent is either fully provisioned or unchanged.
 3. **Mechanical Safety**: Managed output is explicitly header-tagged.
 4. **Idempotence**: Repeated `hire`/`fire` runs should converge safely.
@@ -18,35 +18,35 @@ Principles:
 
 ### Increment 01: Workforce Templates Scaffolding
 Scope:
-1. Ensure `workforce/templates/` exists.
+1. Ensure `harness/harness/workforce/templates/` exists.
 2. Create `gemini`, `claude`, and `github-copilot` template folders.
 3. Add `manifest.yaml` and `AGENTS.md` to each folder.
 
 Primary files:
-1. `workforce/templates/gemini/manifest.yaml`
-2. `workforce/templates/gemini/AGENTS.md`
-3. `workforce/templates/claude/manifest.yaml`
-4. `workforce/templates/claude/AGENTS.md`
-5. `workforce/templates/github-copilot/manifest.yaml`
-6. `workforce/templates/github-copilot/AGENTS.md`
+1. `harness/harness/workforce/templates/gemini/manifest.yaml`
+2. `harness/harness/workforce/templates/gemini/AGENTS.md`
+3. `harness/harness/workforce/templates/claude/manifest.yaml`
+4. `harness/harness/workforce/templates/claude/AGENTS.md`
+5. `harness/harness/workforce/templates/github-copilot/manifest.yaml`
+6. `harness/harness/workforce/templates/github-copilot/AGENTS.md`
 
 Test gate:
-1. `Get-ChildItem workforce/templates -Recurse -File`
+1. `Get-ChildItem harness/workforce/templates -Recurse -File`
 
 ### Increment 02: CLI Entry Points (`hire` and `fire`)
 Scope:
-1. Create `scripts/workforce.py`.
+1. Create `harness/harness/scripts/workforce.py`.
 2. Implement argument parsing for `hire <agent>` and `fire <agent>`.
 3. Validate agent template existence and required manifest keys.
 4. Support `--dry-run`.
 
 Primary files:
-1. `scripts/workforce.py`
+1. `harness/harness/scripts/workforce.py`
 
 Test gate:
-1. `python -m py_compile scripts/workforce.py`
-2. `python scripts/workforce.py hire gemini --dry-run`
-3. `python scripts/workforce.py fire gemini --dry-run`
+1. `python -m py_compile harness/scripts/workforce.py`
+2. `python harness/scripts/workforce.py hire gemini --dry-run`
+3. `python harness/scripts/workforce.py fire gemini --dry-run`
 
 ### Increment 03: `fire` Command Behavior
 Scope:
@@ -55,10 +55,10 @@ Scope:
 3. If present, remove recursively (or log action in dry-run).
 
 Primary files:
-1. `scripts/workforce.py`
+1. `harness/harness/scripts/workforce.py`
 
 Test gate:
-1. `python scripts/workforce.py fire gemini --dry-run`
+1. `python harness/scripts/workforce.py fire gemini --dry-run`
 
 ### Increment 04: `hire` Folder Setup and Conflict Handling
 Scope:
@@ -68,10 +68,10 @@ Scope:
 4. Run manifest-defined native init command when configured.
 
 Primary files:
-1. `scripts/workforce.py`
+1. `harness/harness/scripts/workforce.py`
 
 Test gate:
-1. `python scripts/workforce.py hire gemini --dry-run`
+1. `python harness/scripts/workforce.py hire gemini --dry-run`
 
 ### Increment 05: Identity Injection and Managed Header
 Scope:
@@ -80,33 +80,33 @@ Scope:
 3. Prepend `<!-- AUTO-GENERATED: DO NOT EDIT -->`.
 
 Primary files:
-1. `scripts/workforce.py`
-2. `workforce/templates/*/AGENTS.md`
+1. `harness/harness/scripts/workforce.py`
+2. `harness/harness/workforce/templates/*/AGENTS.md`
 
 Test gate:
-1. `python scripts/workforce.py hire gemini --dry-run`
+1. `python harness/scripts/workforce.py hire gemini --dry-run`
 
 ### Increment 06: Skills Sync
 Scope:
-1. Sync `workforce/agent-template/skills/` into `<context_folder>/skills`.
+1. Sync `harness/workforce/agent-template/skills/` into `<context_folder>/skills`.
 2. Honor `skills_library_sync` strategy (`copy` or `symlink` with copy fallback).
 3. Ensure sync step runs after target folder setup.
 
 Primary files:
-1. `scripts/workforce.py`
-2. `workforce/agent-template/skills/*`
+1. `harness/harness/scripts/workforce.py`
+2. `harness/workforce/agent-template/skills/*`
 
 Test gate:
-1. `python scripts/workforce.py hire gemini --dry-run`
+1. `python harness/scripts/workforce.py hire gemini --dry-run`
 
 ---
 
 ## Verification Suite (Ralph Loop Exit Alignment)
-1. `python -m py_compile scripts/workforce.py`
-2. `python scripts/workforce.py hire gemini --dry-run`
-3. `python scripts/workforce.py fire gemini --dry-run`
-4. `python scripts/workforce.py hire claude --dry-run`
-5. `python scripts/workforce.py hire github-copilot --dry-run`
+1. `python -m py_compile harness/scripts/workforce.py`
+2. `python harness/scripts/workforce.py hire gemini --dry-run`
+3. `python harness/scripts/workforce.py fire gemini --dry-run`
+4. `python harness/scripts/workforce.py hire claude --dry-run`
+5. `python harness/scripts/workforce.py hire github-copilot --dry-run`
 
 ## Delivery Rules
 1. One increment per commit.
@@ -117,5 +117,5 @@ Test gate:
 
 | Milestone | Increments | Coherent Outcome | Standalone Test Gate | Exit Criteria |
 | :--- | :--- | :--- | :--- | :--- |
-| **M-1: Workforce Foundation** | 01-03 | Templates exist and `fire` behavior is safe/idempotent. | `python scripts/workforce.py fire gemini --dry-run` | Template validity and offboarding behavior confirmed. |
-| **M-2: Full Hiring Cycle** | 04-06 | `hire` provisions identity and skills from source-of-truth folders. | `python scripts/workforce.py hire gemini --dry-run` | Provisioning flow and sync logic validated. |
+| **M-1: Workforce Foundation** | 01-03 | Templates exist and `fire` behavior is safe/idempotent. | `python harness/scripts/workforce.py fire gemini --dry-run` | Template validity and offboarding behavior confirmed. |
+| **M-2: Full Hiring Cycle** | 04-06 | `hire` provisions identity and skills from source-of-truth folders. | `python harness/scripts/workforce.py hire gemini --dry-run` | Provisioning flow and sync logic validated. |

@@ -4,7 +4,7 @@
 
 Deliver markdownlint infrastructure across the scaffold: CLI scripts, GitHub Actions CI, and a pre-commit hook via husky/lint-staged.
 
-Reference: `scaffold-dev/product-specs/` (no standalone PRD — originated from `README.md` line 53 recommendation and `QUALITY_SCORE.md` linting standards)
+Reference: `docs/product-specs/` (no standalone PRD — originated from `README.md` line 53 recommendation and `QUALITY_SCORE.md` linting standards)
 Architecture constraints: `ARCHITECTURE.md`
 
 Principles:

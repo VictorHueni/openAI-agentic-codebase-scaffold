@@ -4,7 +4,7 @@
 
 Consolidate the repository into a two-concept structure: root (a project using the harness pattern to build itself) and `harness/` (a portable, self-contained IT department template). Eliminate `scaffold-dev/` by promoting its content to root `docs/`.
 
-Reference: `scaffold-dev/product-specs/0002_prd_repo-reorganization.md`
+Reference: `docs/product-specs/0002_prd_repo-reorganization.md`
 Architecture constraints: `ARCHITECTURE.md`
 
 Principles:

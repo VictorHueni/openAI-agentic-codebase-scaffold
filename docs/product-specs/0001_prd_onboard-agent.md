@@ -18,7 +18,7 @@ Manual setup of hidden context folders (`.gemini`, `.claude`, etc.) creates drif
 - **Decoupled Lifecycle**: Keep onboarding (`hire`) separate from synchronization workflows.
 - **Summary + Pointer Model**: Generate lean agent primary files (`GEMINI.md`, `CLAUDE.md`, etc.) that point to root laws.
 - **YAML-Driven Configs**: Define agent setup via template-local `manifest.yaml`.
-- **Skills Availability**: Make `workforce/agent-template/skills` available inside each onboarded agent folder (copy or symlink, per manifest).
+- **Skills Availability**: Make `harness/workforce/agent-template/skills` available inside each onboarded agent folder (copy or symlink, per manifest).
 - **Multi-Agent Interoperability**: Support Gemini, Claude, Copilot, and OSS-style agent setups.
 
 ---
@@ -47,7 +47,7 @@ skills_library_sync: copy
 - [x] Script calls native `init` when defined in the manifest.
 - [x] Script writes the primary file from the template `AGENTS.md`.
 - [x] Script prepends `AUTO-GENERATED` headers to managed output.
-- [x] Script syncs `workforce/agent-template/skills` into the onboarded agent folder.
+- [x] Script syncs `harness/workforce/agent-template/skills` into the onboarded agent folder.
 
 ### US-002: Interactive Conflict Resolution
 **Description:** As a developer, I get prompted when a target agent folder already exists, so I do not lose local state accidentally.
@@ -69,10 +69,10 @@ skills_library_sync: copy
 ---
 
 ## 5. Technical Considerations
-- **Template Source**: Agent manifests and per-agent overlays live in `workforce/templates/`.
-- **Skills Source**: Skills source of truth is `workforce/agent-template/skills/`.
+- **Template Source**: Agent manifests and per-agent overlays live in `harness/workforce/templates/`.
+- **Skills Source**: Skills source of truth is `harness/workforce/agent-template/skills/`.
 - **Header Protection**: Managed files include `<!-- AUTO-GENERATED: DO NOT EDIT -->`.
-- **CLI Entry Point**: `scripts/workforce.py` provides `hire` and `fire`.
+- **CLI Entry Point**: `harness/scripts/workforce.py` provides `hire` and `fire`.
 
 ---
 
