@@ -40,3 +40,7 @@ out/
 ehthumbs.db
 Thumbs.db
 Desktop.ini
+
+
+# --- Python ---
+__pycache__/
