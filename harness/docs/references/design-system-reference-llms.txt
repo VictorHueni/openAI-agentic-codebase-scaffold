@@ -1,2 +1,5 @@
 Design System Reference for LLMs
+
+EXAMPLE — This file is a sample. Replace or delete it for your project.
+
 [Provide a text-based representation of the design system components and tokens.]

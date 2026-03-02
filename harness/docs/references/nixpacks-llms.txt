@@ -1,2 +1,5 @@
 Nixpacks Configuration for LLMs
+
+EXAMPLE — This file is a sample. Replace or delete it for your project.
+
 [Describe how the build system is configured.]
