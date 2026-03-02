@@ -9,11 +9,11 @@ Build and maintain the **Harness Engineering** scaffold — a portable, self-con
 - **Keep `harness/` self-contained**: No file inside `harness/` may reference `../` (except template AGENTS.md files which deploy outside harness).
 - **True Dogfooding**: This repo itself uses the harness pattern — root governance for the scaffold project, `harness/` for the portable template.
 - **The Ralph Loop Protocol**:
-    - **Self-Correction First**: Before submitting any change, review your own work against `ARCHITECTURE.md` and `QUALITY_SCORE.md` invariants.
-    - **Throw it back on the pottery wheel**: If a test fails or a linting error occurs, iterate until the local environment is green.
-    - **Agent-to-Agent Review**: Simulate or request reviews from specialized sub-agents. Treat human feedback as a high-priority constraint.
-    - **Context Engineering**: Use `gh`, local scripts, and repository-embedded skills to gather context. Do not guess; verify facts by reading the codebase.
-    - **Small Batches**: Perform one discrete task per loop.
+  - **Self-Correction First**: Before submitting any change, review your own work against `ARCHITECTURE.md` and `QUALITY_SCORE.md` invariants.
+  - **Throw it back on the pottery wheel**: If a test fails or a linting error occurs, iterate until the local environment is green.
+  - **Agent-to-Agent Review**: Simulate or request reviews from specialized sub-agents. Treat human feedback as a high-priority constraint.
+  - **Context Engineering**: Use `gh`, local scripts, and repository-embedded skills to gather context. Do not guess; verify facts by reading the codebase.
+  - **Small Batches**: Perform one discrete task per loop.
 
 ## How to use this repo
 

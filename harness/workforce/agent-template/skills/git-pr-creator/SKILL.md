@@ -118,37 +118,37 @@ Follow these steps to create a Pull Request:
 
 ### Feature in editor
 
-```
+```text
 feat(editor): Add workflow performance metrics display
 ```
 
 ### Bug fix in core
 
-```
+```text
 fix(core): Resolve memory leak in execution engine
 ```
 
 ### Node-specific change
 
-```
+```text
 fix(Slack Node): Handle rate limiting in message send
 ```
 
 ### Breaking change (add exclamation mark before colon)
 
-```
+```text
 feat(API)!: Remove deprecated v1 endpoints
 ```
 
 ### No changelog entry
 
-```
+```text
 refactor(core): Simplify error handling (no-changelog)
 ```
 
 ### No scope (affects multiple areas)
 
-```
+```text
 chore: Update dependencies to latest versions
 ```
 
@@ -156,7 +156,7 @@ chore: Update dependencies to latest versions
 
 The PR title must match this pattern:
 
-```
+```text
 ^(feat|fix|perf|test|docs|refactor|build|ci|chore|revert)(\([a-zA-Z0-9 ]+( Node)?\))?!?: [A-Z].+[^.]$
 ```
 

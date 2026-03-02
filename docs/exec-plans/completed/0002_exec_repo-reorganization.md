@@ -8,6 +8,7 @@ Reference: `docs/product-specs/0002_prd_repo-reorganization.md`
 Architecture constraints: `ARCHITECTURE.md`
 
 Principles:
+
 1. **Self-Containment**: `harness/` must never reference `../` (except template AGENTS.md which deploys outside harness).
 2. **True Dogfooding**: The root project follows the same structure that harness/ prescribes.
 3. **Atomic Increments**: Each increment leaves the repo in a working state.
@@ -17,7 +18,7 @@ Principles:
 
 ## Target Structure
 
-```
+```text
 /
 ├── AGENTS.md                   # Scaffold-specific: how to build the scaffold
 ├── ARCHITECTURE.md             # Scaffold-specific: two-layer architecture
@@ -70,18 +71,21 @@ Principles:
 ### Increment 01: Move `docs/` to `harness/docs/`
 
 Scope:
+
 1. Create `harness/` directory.
 2. `git mv docs/ harness/docs/` — template docs become the harness template.
 
 Primary files: `docs/` entire tree → `harness/docs/`
 
 Test gate:
+
 1. `ls harness/docs/product-specs/index.md` — exists.
 2. Root `docs/` no longer exists.
 
 ### Increment 02: Move `scaffold-dev/` content to root `docs/`
 
 Scope:
+
 1. Create root `docs/` with required structure (`product-specs/`, `exec-plans/active/`, `exec-plans/completed/`).
 2. Move `scaffold-dev/product-specs/*` → `docs/product-specs/`
 3. Move `scaffold-dev/exec-plans/*` → `docs/exec-plans/`
@@ -91,6 +95,7 @@ Scope:
 7. Remove the "Scaffold Development Mode" section from root `AGENTS.md`.
 
 Primary files:
+
 1. `docs/product-specs/0001_prd_onboard-agent.md` (moved)
 2. `docs/product-specs/0002_prd_repo-reorganization.md` (moved)
 3. `docs/exec-plans/active/0002_exec_markdownlint.md` (moved)
@@ -100,6 +105,7 @@ Primary files:
 7. `AGENTS.md` (edited)
 
 Test gate:
+
 1. `ls docs/product-specs/0001_prd_onboard-agent.md` — exists.
 2. `scaffold-dev/` directory no longer exists.
 3. `grep scaffold-dev .gitignore` — no matches.
@@ -107,12 +113,14 @@ Test gate:
 ### Increment 03: Move `workforce/` and `scripts/` into `harness/`
 
 Scope:
+
 1. `git mv workforce/ harness/workforce/`
 2. `git mv scripts/ harness/scripts/`
 
 Primary files: 2 directory moves
 
 Test gate:
+
 1. `ls harness/workforce/templates/claude/manifest.yaml` — exists.
 2. `ls harness/scripts/workforce.py` — exists.
 
@@ -121,15 +129,18 @@ Test gate:
 Scope: Update `harness/scripts/workforce.py` for new location.
 
 Changes:
+
 - `ROOT` (line 13) now resolves to `harness/` — correct for TEMPLATES_DIR, SKILLS_SOURCE_DIR.
 - Add `REPO_ROOT = ROOT.parent` — for agent context folders at project root.
 - `resolve_target_dir` (line 62): `ROOT / folder` → `REPO_ROOT / folder`.
 - `run_native_init` (line 71): `cwd=ROOT` → `cwd=REPO_ROOT`.
 
 Primary files:
+
 1. `harness/scripts/workforce.py`
 
 Test gate:
+
 1. `python -m py_compile harness/scripts/workforce.py` — exit 0.
 2. `python harness/scripts/workforce.py hire claude --dry-run` — target `.claude/` at repo root, NOT `harness/.claude/`.
 
@@ -138,6 +149,7 @@ Test gate:
 Scope: Create clean template versions of all governance files inside `harness/`. Strip any scaffold-specific content.
 
 Create:
+
 1. `harness/AGENTS.md` — Ralph Loop protocol, directives, repo navigation guide. NO scaffold-dev references.
 2. `harness/ARCHITECTURE.md` — clean stub for users to fill in.
 3. `harness/QUALITY_SCORE.md` — clean template with Ralph Loop exit criteria.
@@ -147,6 +159,7 @@ Create:
 Primary files: 10 new files in `harness/`
 
 Test gate:
+
 1. `ls harness/AGENTS.md harness/README.md` — both exist.
 2. `grep -c "scaffold-dev" harness/AGENTS.md` — returns 0.
 3. `grep -c "\.\.\/" harness/AGENTS.md` — returns 0.
@@ -156,6 +169,7 @@ Test gate:
 Scope: Root governance files become specific to building/maintaining the scaffold.
 
 Key content:
+
 - **`AGENTS.md`**: Mission is building the Harness Engineering scaffold. Directives include keeping harness/ self-contained. How-to references `docs/product-specs/` and `docs/exec-plans/active/`.
 - **`ARCHITECTURE.md`**: Two-layer architecture (root project + harness/ template). Invariant: harness/ never references `../`.
 - **`QUALITY_SCORE.md`**: Scaffold quality bar — harness must be self-contained, templates must be clean, workforce.py must compile.
@@ -164,6 +178,7 @@ Key content:
 Primary files: 9 root governance `.md` files (rewritten)
 
 Test gate:
+
 1. Root `AGENTS.md` references `docs/product-specs/` (not scaffold-dev/).
 2. Root `ARCHITECTURE.md` describes the harness/ self-containment invariant.
 
@@ -172,6 +187,7 @@ Test gate:
 Scope: Template AGENTS.md files (deployed into `.claude/CLAUDE.md`, etc.) need `../harness/` prefix to reach governance files.
 
 Changes in `harness/workforce/templates/{claude,gemini,github-copilot}/AGENTS.md`:
+
 - `../AGENTS.md` → `../harness/AGENTS.md`
 - `../ARCHITECTURE.md` → `../harness/ARCHITECTURE.md`
 - `../QUALITY_SCORE.md` → `../harness/QUALITY_SCORE.md`
@@ -181,6 +197,7 @@ Changes in `harness/workforce/templates/{claude,gemini,github-copilot}/AGENTS.md
 Primary files: 3 template AGENTS.md files
 
 Test gate:
+
 1. `grep "harness/AGENTS.md" harness/workforce/templates/claude/AGENTS.md` — matches.
 
 ### Increment 08: Audit harness/ self-containment and fix skill paths
@@ -188,30 +205,36 @@ Test gate:
 Scope: Ensure harness/ has zero `../` references except in template AGENTS.md.
 
 Fix:
+
 - `get-next-id.py` — update to use `Path.cwd()` for repo root resolution.
 - Skill SKILL.md files — verify `docs/` paths work as sibling references within harness/.
 - All harness/ `.md` files — verify no `../` leaks.
 
 Primary files:
+
 1. `harness/workforce/agent-template/skills/spec-prd-creator/scripts/get-next-id.py`
 2. Skill SKILL.md files (if any need path fixes)
 
 Test gate:
+
 1. `grep -rn "\.\.\/" harness/ --include="*.md" --include="*.py"` — only matches in `workforce/templates/*/AGENTS.md`.
 
 ### Increment 09: Update root `README.md`, `CLAUDE.md`, `GEMINI.md`
 
 Scope:
+
 1. Rewrite `README.md` to explain the meta structure.
 2. Verify `CLAUDE.md` and `GEMINI.md` point to root `AGENTS.md`.
 3. Update all docs references in README.
 
 Primary files:
+
 1. `README.md`
 2. `CLAUDE.md`
 3. `GEMINI.md`
 
 Test gate:
+
 1. README describes both layers (root project + harness/ template).
 
 ### Increment 10: Update `docs/` references (scaffold working docs)
@@ -219,6 +242,7 @@ Test gate:
 Scope: Update paths in scaffold working docs that referenced `scaffold-dev/` or old root paths.
 
 Changes:
+
 - `docs/product-specs/0001_prd_onboard-agent.md`: `workforce/` → `harness/workforce/`, `scripts/` → `harness/scripts/`
 - `docs/exec-plans/completed/0001_exec_onboard-agent.md`: same path updates.
 - `docs/exec-plans/active/0002_exec_markdownlint.md`: same path updates.
@@ -227,11 +251,13 @@ Changes:
 Primary files: 4 files in `docs/`
 
 Test gate:
+
 1. `grep -r "scripts/workforce.py" docs/ | grep -v "harness/"` — no matches.
 
 ### Increment 11: Final verification + cleanup
 
 Scope:
+
 1. Verify root structure.
 2. Verify harness/ self-containment.
 3. Verify workforce.py works.

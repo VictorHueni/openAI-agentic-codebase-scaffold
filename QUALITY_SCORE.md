@@ -3,6 +3,7 @@
 ## Definition of Quality
 
 A scaffold change is "Done" when:
+
 - `harness/` remains self-contained (`grep -rn "\.\.\/" harness/` only matches template AGENTS.md files).
 - Templates are clean stubs with no scaffold-specific content.
 - `workforce.py` compiles and dry-run passes.
@@ -18,6 +19,7 @@ A scaffold change is "Done" when:
 ## Ralph Loop Satisfice (Exit Criteria)
 
 An agent may only consider a task "Done" when:
+
 1. **Self-Review Passes**: The agent has explicitly checked the diff against `ARCHITECTURE.md`.
 2. **Automated Verifiers are Green**: All tests, linters, and type-checkers pass in the local environment.
 3. **Agent-Legibility maintained**: Any new logic is documented in the code or `docs/` such that another agent could maintain it.

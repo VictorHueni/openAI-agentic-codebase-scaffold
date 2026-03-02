@@ -20,6 +20,7 @@ Prioritize defects and execution risks, not writing style.
 ## Inputs
 
 Provide:
+
 1. Target document path(s) to review.
 2. Optional related references (code, schema, migration files, linked docs).
 3. Optional review focus (for example: data contracts, testability, rollout risk).
@@ -27,18 +28,27 @@ Provide:
 ## Workflow
 
 1. Read the target doc end-to-end and build a requirement map:
-- goals, non-goals, acceptance criteria, dependencies, constraints, open questions.
-2. Cross-check internal consistency:
-- detect contradictions between goals, acceptance criteria, and technical approach.
-3. Validate feasibility against implementation reality:
-- compare required behavior with existing CLI, contracts, DB schema, and test patterns.
-4. Run risk lenses:
-- scope boundaries, backward compatibility, data integrity, observability, testability, delivery sequencing, migration/deletion safety.
-5. Produce findings ranked by severity with concrete remediation and PRD/plan update instructions.
+
+   - goals, non-goals, acceptance criteria, dependencies, constraints, open questions.
+
+1. Cross-check internal consistency:
+
+   - detect contradictions between goals, acceptance criteria, and technical approach.
+
+1. Validate feasibility against implementation reality:
+
+   - compare required behavior with existing CLI, contracts, DB schema, and test patterns.
+
+1. Run risk lenses:
+
+   - scope boundaries, backward compatibility, data integrity, observability, testability, delivery sequencing, migration/deletion safety.
+
+1. Produce findings ranked by severity with concrete remediation and PRD/plan update instructions.
 
 ## Severity Rubric
 
 Use exactly these labels:
+
 1. `critical`: Release-blocking contradiction or missing requirement that can cause wrong behavior, data loss/corruption, severe security/compliance risk, or invalid scope.
 2. `major`: High-impact gap likely to cause rework, failed delivery, or materially incorrect/ambiguous implementation.
 3. `normal`: Important clarity/testability/operability issue that should be fixed for reliable execution but is not release-blocking.
@@ -47,6 +57,7 @@ Use exactly these labels:
 ## Review Lenses
 
 Use all lenses, then emphasize the highest-risk areas:
+
 1. Problem framing: Is the problem measurable and tied to user/business outcomes?
 2. Scope boundaries: Are non-goals explicit and enforceable?
 3. Requirements quality: Are acceptance criteria verifiable, unambiguous, and complete?
@@ -60,6 +71,7 @@ Use all lenses, then emphasize the highest-risk areas:
 ## Output Format
 
 Produce findings first, sorted by severity descending. Include:
+
 1. `Severity`
 2. `Issue`
 3. `Evidence` with file path and line reference
@@ -67,6 +79,7 @@ Produce findings first, sorted by severity descending. Include:
 5. `How to update PRD/plan` with section-level patch guidance
 
 Then include:
+
 1. `Open questions/assumptions` (only if unresolved decisions remain)
 2. `Optional short summary` (after findings)
 
@@ -75,6 +88,7 @@ If no findings exist, state that explicitly and list residual risks or testing g
 ## PRD Update Guidance Pattern
 
 For each finding, propose document edits that are directly actionable:
+
 1. section to modify (for example: "US-003 Acceptance Criteria")
 2. exact change type (`add`, `replace`, `clarify`, `defer`, `gate`)
 3. specific text direction (what requirement to add/change and why)
@@ -82,6 +96,7 @@ For each finding, propose document edits that are directly actionable:
 ## Implementation Plan Add-On
 
 When reviewing implementation plans, additionally verify:
+
 1. each increment is atomic and independently testable
 2. each increment has a deterministic test gate
 3. dependency ordering is explicit
