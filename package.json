@@ -1,0 +1,17 @@
+{
+  "name": "harness-engineering-scaffold",
+  "private": true,
+  "description": "Portable Agent-First Engineering scaffold — lint and quality tooling.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "lint:md": "markdownlint-cli2",
+    "lint:md:fix": "markdownlint-cli2 --fix"
+  },
+  "devDependencies": {
+    "husky": "^9",
+    "lint-staged": "^15",
+    "markdownlint-cli2": "^0.17"
+  }
+}
