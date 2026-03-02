@@ -31,19 +31,19 @@ Provide:
 
    - goals, non-goals, acceptance criteria, dependencies, constraints, open questions.
 
-1. Cross-check internal consistency:
+2. Cross-check internal consistency:
 
    - detect contradictions between goals, acceptance criteria, and technical approach.
 
-1. Validate feasibility against implementation reality:
+3. Validate feasibility against implementation reality:
 
    - compare required behavior with existing CLI, contracts, DB schema, and test patterns.
 
-1. Run risk lenses:
+4. Run risk lenses:
 
    - scope boundaries, backward compatibility, data integrity, observability, testability, delivery sequencing, migration/deletion safety.
 
-1. Produce findings ranked by severity with concrete remediation and PRD/plan update instructions.
+5. Produce findings ranked by severity with concrete remediation and PRD/plan update instructions.
 
 ## Severity Rubric
 

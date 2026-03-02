@@ -22,29 +22,29 @@ Use this skill to produce ADRs that are explicit, auditable, and easy to revisit
    - `Update`: revise an existing ADR and keep decision history clear.
    - `Review`: audit an ADR and return findings plus a proposed rewrite.
 
-1. Gather missing inputs before drafting.
+2. Gather missing inputs before drafting.
 
    - Ask only for critical gaps: problem context, decision drivers, options, chosen option, consequences, status/date, and stakeholders.
    - Keep questions short and decision-oriented.
 
-1. Apply repository conventions first, then MADR structure.
+3. Apply repository conventions first, then MADR structure.
 
    - Default location: `docs/design-docs/architecture-decisions/`.
    - If ADR numbering exists, continue the numbering pattern.
    - If the repo already has ADR style/location conventions, preserve those while ensuring MADR-quality decision content.
 
-1. Draft the ADR using the MADR templates in `references/madr-templates.md`.
+4. Draft the ADR using the MADR templates in `references/madr-templates.md`.
 
    - Use the full template for high-impact decisions.
    - Use the minimal template for small, localized decisions.
 
-1. Validate quality with `references/adr-quality-checklist.md`.
+5. Validate quality with `references/adr-quality-checklist.md`.
 
    - Ensure one ADR contains one decision.
    - Ensure options, trade-offs, and consequences are explicit.
    - Ensure the chosen option is justified by decision drivers.
 
-1. Finalize for traceability.
+6. Finalize for traceability.
 
    - Link superseded/superseding ADRs where applicable.
    - Ensure title and filename are stable and searchable.
@@ -62,8 +62,8 @@ Use this skill to produce ADRs that are explicit, auditable, and easy to revisit
 When asked to review an ADR:
 
 1. Report findings first, ordered by severity (`critical`, `major`, `normal`, `low`).
-1. Reference exact file paths and lines when available.
-1. Focus on decision quality problems:
+2. Reference exact file paths and lines when available.
+3. Focus on decision quality problems:
 
    - missing decision drivers,
    - missing alternatives,
@@ -71,7 +71,7 @@ When asked to review an ADR:
    - unclear consequences,
    - broken traceability to prior ADRs.
 
-1. Provide a corrected ADR text after findings if requested.
+4. Provide a corrected ADR text after findings if requested.
 
 ## References
 
