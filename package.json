@@ -7,7 +7,11 @@
   },
   "scripts": {
     "lint:md": "markdownlint-cli2",
-    "lint:md:fix": "markdownlint-cli2 --fix"
+    "lint:md:fix": "markdownlint-cli2 --fix",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.md": "markdownlint-cli2"
   },
   "devDependencies": {
     "husky": "^9",
