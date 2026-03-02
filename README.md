@@ -6,9 +6,9 @@ A portable **Agent-First Engineering** template based on [Harness Engineering](h
 
 This repository has two layers:
 
-| Layer | Path | Purpose |
-|-------|------|---------|
-| **Scaffold project** | Root (`/`) | Governance and working docs for building the scaffold itself |
+| Layer                 | Path       | Purpose                                                                   |
+| --------------------- | ---------- | ------------------------------------------------------------------------- |
+| **Scaffold project**  | Root (`/`) | Governance and working docs for building the scaffold itself              |
 | **Portable template** | `harness/` | Self-contained template — copy into any project for instant AI governance |
 
 ### Root — Scaffold Development
@@ -25,6 +25,31 @@ This repository has two layers:
 - **`scripts/`** — CLI tools (`workforce.py` for hire/fire commands)
 
 See [`harness/README.md`](harness/README.md) for the getting started guide.
+
+### Scaffold Working Docs
+
+This folder contains the PRDs, Execution Plans, and Design Documents used to **build the scaffold itself**.
+
+#### Structure
+
+| Folder                  | Purpose                                                      |
+| ----------------------- | ------------------------------------------------------------ |
+| `product-specs/`        | PRDs for scaffold features (e.g., the hire/fire CLI utility) |
+| `exec-plans/active/`    | Implementation plans currently being worked on               |
+| `exec-plans/completed/` | Archived plans for delivered scaffold features               |
+| `design-docs/`          | Technical design documents for scaffold architecture         |
+| `generated/`            | Auto-generated scaffold artifacts                            |
+| `references/`           | LLM-readable references specific to scaffold development     |
+
+#### How this relates to `harness/`
+
+- **`docs/`** (this folder) contains working documents for the scaffold project.
+- **`harness/docs/`** contains the clean template documentation engine shipped to users.
+- Skills and workforce templates point to `docs/` by default (relative to project CWD).
+
+## Getting Started with the Template
+
+See [`harness/README.md`](../harness/README.md) for instructions on how to use the portable template in your own project.
 
 ## Using the Template
 
