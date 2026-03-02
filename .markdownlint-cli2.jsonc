@@ -1,0 +1,48 @@
+// Markdownlint configuration for the Harness Engineering Scaffold.
+// Uses markdownlint-cli2 JSONC format so rule rationale can be documented inline.
+// See: https://github.com/DavidAnson/markdownlint-cli2
+{
+  // Glob patterns — lint all markdown in the repo.
+  "globs": ["**/*.md"],
+
+  // Ignore directories that are gitignored but may exist on disk.
+  // markdownlint-cli2 scans the filesystem, not git-tracked files.
+  "ignores": [
+    "node_modules/",
+    ".gemini/",
+    ".claude/",
+    ".cursor/",
+    ".aider/",
+    ".bolt/",
+    ".copilot-instructions/"
+  ],
+
+  "config": {
+    // MD013 — Line length.
+    // Disabled: prose-heavy docs with 66+ lines already exceeding 120 chars.
+    "MD013": false,
+
+    // MD024 — Duplicate headings.
+    // Allow duplicate headings under different parents (exec plans reuse
+    // "Scope:", "Test gate:", etc. under each increment).
+    "MD024": { "siblings_only": true },
+
+    // MD026 — Trailing punctuation in headings.
+    // Exclude colons and parentheses — headings like "## Types (required)"
+    // and "Scope:" are common throughout the codebase.
+    "MD026": { "punctuation": ".,;!。，；！" },
+
+    // MD033 — Inline HTML.
+    // Disabled: template users may need <details>, badges, image sizing, etc.
+    "MD033": false,
+
+    // MD036 — Emphasis used instead of a heading.
+    // Disabled: bold text is used as visual separators in SKILL.md files.
+    "MD036": false,
+
+    // MD041 — First line should be a top-level heading.
+    // Disabled: all 7 SKILL.md files (14 including .claude/ copies) start
+    // with YAML front matter (---).
+    "MD041": false
+  }
+}
