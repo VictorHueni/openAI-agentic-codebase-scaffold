@@ -16,6 +16,22 @@ Operate autonomously within the **Ralph Loop** to drive tasks from intent to com
   - **Context Engineering**: Use `gh`, local scripts, and repository-embedded skills to gather context. Do not guess; verify facts by reading the codebase.
   - **Small Batches**: Perform one discrete task per loop.
 
+## Ralph Loop Execution
+
+The Ralph Loop Protocol above defines the philosophy. The `ralph-loop-runner` skill provides the concrete machinery:
+
+1. **Prepare**: Create a PRD (`spec-prd-creator`) and execution plan (`spec-implementation-planner`) with status fields on every increment and user story.
+2. **Review**: Run `spec-peer-reviewer` to validate the plan before execution.
+3. **Execute**: Invoke `ralph-loop-runner` to set up the workspace and iterate through increments. Each iteration: implement one increment, pass the test gate, commit, advance.
+4. **Monitor**: Track progress via `progress.txt` in the workspace and status fields in the exec plan.
+5. **Archive**: When all increments are done, the runner moves artifacts to their final locations and cleans up the workspace.
+
+For automated execution, use `ralph.sh` to spawn a fresh agent per increment:
+
+```bash
+bash skills/ralph-loop-runner/scripts/ralph.sh docs/exec-plans/active/NNNN_feature-name/
+```
+
 ## How to use this repo
 
 [Guide the agent on where to find types, logic, and tests.]
