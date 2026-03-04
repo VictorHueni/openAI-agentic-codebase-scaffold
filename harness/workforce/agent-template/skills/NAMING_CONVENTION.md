@@ -21,6 +21,7 @@ Use a consistent, intent-first naming format for all skills.
 - `git-commit`
 - `git-pr-creator`
 - `git-worktrees`
+- `ralph-loop-runner`
 - `spec-adr-manager`
 - `spec-implementation-planner`
 - `spec-prd-creator`
@@ -30,4 +31,5 @@ Use a consistent, intent-first naming format for all skills.
 
 - If the skill is product/spec/planning/review architecture work, prefer the `spec-` prefix.
 - If the skill is source-control workflow, use the `git-` prefix.
+- If the skill is execution/orchestration (autonomous loop, task runner), use the `ralph-` prefix.
 - Keep folder name and `name:` in `SKILL.md` identical.

@@ -103,4 +103,18 @@ When reviewing implementation plans, additionally verify:
 4. rollback/remediation paths exist for risky increments
 5. file ownership and touch-points are scoped to reduce regression risk
 
+## Ralph Loop Readiness
+
+When reviewing plans intended for autonomous execution via `ralph-loop-runner`, additionally verify:
+
+1. Every increment has a `**Status:** pending` field.
+2. The plan header includes `**Overall Status:**` and `**Current Increment:**` fields.
+3. The milestone table includes a `Status` column.
+4. Test gates contain executable commands (not prose descriptions).
+5. The corresponding PRD has `- [ ]` checkboxes on all acceptance criteria.
+6. The PRD has `**Status:**` fields on each user story.
+7. Increments are ordered so that each can be implemented independently of later ones.
+
+If any of these are missing, flag as `major` severity — the plan cannot be executed autonomously without them.
+
 Do not implement code in this skill; review and planning quality is the deliverable.
