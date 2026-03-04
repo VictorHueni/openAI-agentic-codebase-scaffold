@@ -1,0 +1,183 @@
+#!/usr/bin/env bash
+# ralph.sh — Autonomous Ralph Loop orchestration script
+# Spawns a fresh agent per increment until all increments are done.
+#
+# Usage: ralph.sh <workspace-dir> [--agent claude] [--max-iterations 50]
+
+set -euo pipefail
+
+# ─── Defaults ──────────────────────────────────────────────────────────────────
+AGENT="claude"
+MAX_ITERATIONS=50
+WORKSPACE_DIR=""
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SKILL_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+ITERATION_PROMPT="$SKILL_DIR/references/iteration-prompt.md"
+
+# ─── Usage ─────────────────────────────────────────────────────────────────────
+usage() {
+  cat <<USAGE
+Usage: $(basename "$0") <workspace-dir> [options]
+
+Runs the Ralph Loop: spawns a fresh agent per increment until all
+increments in the execution plan are done.
+
+Arguments:
+  workspace-dir         Path to the workspace (e.g., docs/exec-plans/active/0001_my-feature)
+
+Options:
+  --agent <name>        Agent CLI to use (default: claude)
+  --max-iterations <n>  Maximum iterations before stopping (default: 50)
+  -h, --help            Show this help message
+
+Examples:
+  $(basename "$0") docs/exec-plans/active/0001_my-feature
+  $(basename "$0") docs/exec-plans/active/0001_my-feature --agent claude --max-iterations 20
+USAGE
+}
+
+# ─── Argument Parsing ──────────────────────────────────────────────────────────
+if [[ $# -eq 0 ]]; then
+  usage
+  exit 1
+fi
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    --agent)
+      AGENT="$2"
+      shift 2
+      ;;
+    --max-iterations)
+      MAX_ITERATIONS="$2"
+      shift 2
+      ;;
+    -*)
+      echo "Error: Unknown option '$1'" >&2
+      usage
+      exit 1
+      ;;
+    *)
+      if [[ -z "$WORKSPACE_DIR" ]]; then
+        WORKSPACE_DIR="$1"
+      else
+        echo "Error: Unexpected argument '$1'" >&2
+        usage
+        exit 1
+      fi
+      shift
+      ;;
+  esac
+done
+
+# ─── Validation ────────────────────────────────────────────────────────────────
+if [[ -z "$WORKSPACE_DIR" ]]; then
+  echo "Error: workspace-dir is required" >&2
+  usage
+  exit 1
+fi
+
+if [[ ! -d "$WORKSPACE_DIR" ]]; then
+  echo "Error: Workspace directory not found: $WORKSPACE_DIR" >&2
+  exit 1
+fi
+
+if [[ ! -f "$ITERATION_PROMPT" ]]; then
+  echo "Error: Iteration prompt not found: $ITERATION_PROMPT" >&2
+  exit 1
+fi
+
+# Find the exec plan in the workspace
+EXEC_PLAN=$(find "$WORKSPACE_DIR" -maxdepth 1 -name '*_exec_*.md' -type f | head -1)
+if [[ -z "$EXEC_PLAN" ]]; then
+  echo "Error: No execution plan (*_exec_*.md) found in $WORKSPACE_DIR" >&2
+  exit 1
+fi
+
+# ─── Completion Check ──────────────────────────────────────────────────────────
+has_pending_increments() {
+  grep -q '\*\*Status:\*\* pending' "$EXEC_PLAN" 2>/dev/null
+}
+
+has_in_progress_increments() {
+  grep -q '\*\*Status:\*\* in-progress' "$EXEC_PLAN" 2>/dev/null
+}
+
+is_complete() {
+  if has_pending_increments || has_in_progress_increments; then
+    return 1
+  fi
+  return 0
+}
+
+# ─── Agent Command ─────────────────────────────────────────────────────────────
+build_prompt() {
+  sed "s|{{WORKSPACE_DIR}}|$WORKSPACE_DIR|g" "$ITERATION_PROMPT"
+}
+
+run_agent() {
+  local prompt
+  prompt=$(build_prompt)
+
+  case "$AGENT" in
+    claude)
+      echo "$prompt" | claude --print 2>&1
+      ;;
+    *)
+      echo "Error: Unsupported agent '$AGENT'. Currently supported: claude" >&2
+      return 1
+      ;;
+  esac
+}
+
+# ─── Main Loop ─────────────────────────────────────────────────────────────────
+echo "═══════════════════════════════════════════════════════════"
+echo "  Ralph Loop Runner"
+echo "  Workspace:  $WORKSPACE_DIR"
+echo "  Exec Plan:  $EXEC_PLAN"
+echo "  Agent:      $AGENT"
+echo "  Max Iter:   $MAX_ITERATIONS"
+echo "═══════════════════════════════════════════════════════════"
+echo ""
+
+if is_complete; then
+  echo "All increments are already done. Nothing to do."
+  exit 0
+fi
+
+iteration=0
+while [[ $iteration -lt $MAX_ITERATIONS ]]; do
+  iteration=$((iteration + 1))
+
+  echo "───────────────────────────────────────────────────────────"
+  echo "  Iteration $iteration / $MAX_ITERATIONS"
+  echo "  $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+  echo "───────────────────────────────────────────────────────────"
+
+  # Check for completion before spawning
+  if is_complete; then
+    echo ""
+    echo "All increments are done. Ralph Loop complete."
+    exit 0
+  fi
+
+  # Spawn agent
+  if ! run_agent; then
+    echo ""
+    echo "Warning: Agent exited with error. Checking plan state..." >&2
+  fi
+
+  echo ""
+done
+
+# Max iterations reached
+echo "═══════════════════════════════════════════════════════════"
+echo "  Warning: Max iterations ($MAX_ITERATIONS) reached."
+echo "  The loop stopped but increments may remain."
+echo "  Check the exec plan: $EXEC_PLAN"
+echo "═══════════════════════════════════════════════════════════"
+exit 1
