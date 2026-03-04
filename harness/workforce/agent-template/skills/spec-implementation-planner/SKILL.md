@@ -46,9 +46,14 @@ Principles:
 2. Every increment has an explicit test gate.
 3. [Project-specific principle]
 
+**Overall Status:** pending
+**Current Increment:** --
+
 ## Increment Plan
 
 ### Increment XX: [Descriptive Title]
+
+**Status:** pending
 
 Scope:
 
@@ -79,9 +84,9 @@ Exit criteria:
 
 ## Milestone Chunks (Standalone Delivery Groups)
 
-| Milestone      | Increments    | Coherent Outcome | Standalone Test Gate   | Exit Criteria      | Commit Guidance |
-| :------------- | :------------ | :--------------- | :--------------------- | :----------------- | :-------------- |
-| [M-ID]: [Name] | [Start]-[End] | [Description]    | [Verification command] | [Success criteria] | [Commit style]  |
+| Milestone      | Increments    | Status  | Coherent Outcome | Standalone Test Gate   | Exit Criteria      | Commit Guidance |
+| :------------- | :------------ | :------ | :--------------- | :--------------------- | :----------------- | :-------------- |
+| [M-ID]: [Name] | [Start]-[End] | pending | [Description]    | [Verification command] | [Success criteria] | [Commit style]  |
 ```
 
 ## Guiding Principles for Planning
@@ -90,3 +95,4 @@ Exit criteria:
 - **Test-Driven Gates:** Every increment must have a `Test gate`. If no logic is added, use a `smoke test` or `import test`.
 - **Deterministic Outcomes:** Exit criteria must be objective and verifiable.
 - **Sequential Flow:** Order increments to minimize rework and respect dependencies.
+- **Ralph Loop Ready:** Status fields on every increment and milestone enable autonomous execution via the `ralph-loop-runner` skill. Use `**Status:** pending | in-progress | done` to track progress.
