@@ -2,7 +2,7 @@
 
 A portable **Agent-First Engineering** template based on [Harness Engineering](https://openai.com/index/harness-engineering/) by OpenAI and the [Ralph Loop](https://ghuntley.com/loop/) by Geoffrey Huntley.
 
-## Repository Structure
+## What's Inside
 
 This repository has two layers:
 
@@ -11,69 +11,12 @@ This repository has two layers:
 | **Scaffold project**  | Root (`/`) | Governance and working docs for building the scaffold itself              |
 | **Portable template** | `harness/` | Self-contained template — copy into any project for instant AI governance |
 
-### Root — Scaffold Development
-
-- **Governance files** (`AGENTS.md`, `ARCHITECTURE.md`, `QUALITY_SCORE.md`, etc.) — scaffold-specific rules and mission
-- **`docs/`** — scaffold working docs: PRDs, exec plans, design docs
-- **`CLAUDE.md`**, **`GEMINI.md`** — agent entry points for scaffold work
-
-### `harness/` — Portable Template
-
-- **Governance templates** — clean stubs for users to fill in
-- **`docs/`** — documentation engine (specs, plans, design docs, references)
-- **`workforce/`** — agent onboarding system (templates, skills, manifests)
-- **`scripts/`** — CLI tools (`workforce.py` for hire/fire commands)
-
-See [`harness/README.md`](harness/README.md) for the getting started guide.
-
-### Scaffold Working Docs
-
-This folder contains the PRDs, Execution Plans, and Design Documents used to **build the scaffold itself**.
-
-#### Structure
-
-| Folder                  | Purpose                                                      |
-| ----------------------- | ------------------------------------------------------------ |
-| `product-specs/`        | PRDs for scaffold features (e.g., the hire/fire CLI utility) |
-| `exec-plans/active/`    | Implementation plans currently being worked on               |
-| `exec-plans/completed/` | Archived plans for delivered scaffold features               |
-| `design-docs/`          | Technical design documents for scaffold architecture         |
-| `generated/`            | Auto-generated scaffold artifacts                            |
-| `references/`           | LLM-readable references specific to scaffold development     |
-
-#### How this relates to `harness/`
-
-- **`docs/`** (this folder) contains working documents for the scaffold project.
-- **`harness/docs/`** contains the clean template documentation engine shipped to users.
-- Skills and workforce templates point to `docs/` by default (relative to project CWD).
-
-## Getting Started with the Template
-
-See [`harness/README.md`](../harness/README.md) for instructions on how to use the portable template in your own project.
-
-## Using the Template
-
-```bash
-# Copy harness/ into your project
-cp -r harness/ /path/to/my-project/harness/
-
-# Fill in governance files, then onboard agents
-python harness/scripts/workforce.py hire claude
-python harness/scripts/workforce.py hire gemini
-```
-
-## Harness Engineering — Portable Template
-
-This folder is a self-contained **Agent-First Engineering** template based on [Harness Engineering](https://openai.com/index/harness-engineering/) by OpenAI and the [Ralph Loop](https://ghuntley.com/loop/) by Geoffrey Huntley.
-
-Copy `harness/` into any project root to get an instant AI governance structure.
-
-## Quick Start
+## Quick Start — Using the Template
 
 ### 1. Copy into your project
 
 ```bash
-cp -r harness/ /path/to/my-project/harness/
+cp -r harness/ /path/to/my-project/
 ```
 
 ### 2. Define your mission
@@ -96,12 +39,12 @@ Fill in the governance files with your project's specifics:
 
 ```bash
 # Preview what will be created (no changes made)
-python harness/scripts/workforce.py hire claude --dry-run
+python harness/.workforce/workforce.py hire claude --dry-run
 
 # Onboard agents
-python harness/scripts/workforce.py hire claude
-python harness/scripts/workforce.py hire gemini
-python harness/scripts/workforce.py hire github-copilot
+python harness/.workforce/workforce.py hire claude
+python harness/.workforce/workforce.py hire gemini
+python harness/.workforce/workforce.py hire github-copilot
 ```
 
 What `hire` does for each agent:
@@ -112,7 +55,7 @@ What `hire` does for each agent:
 | `gemini`         | `.gemini/`               | `GEMINI.md`  | `gemini /init` | copy        |
 | `github-copilot` | `.copilot-instructions/` | `AGENTS.md`  | none           | copy        |
 
-To remove an agent: `python harness/scripts/workforce.py fire gemini`
+To remove an agent: `python harness/.workforce/workforce.py fire gemini`
 
 ### 4. Write your first product spec
 
@@ -140,38 +83,6 @@ bash skills/ralph-loop-runner/scripts/ralph.sh docs/exec-plans/active/NNNN_featu
 ```
 
 The script detects completion by checking for remaining `**Status:** pending` increments and stops when all are done or the max iteration limit is reached.
-
-## Contents
-
-| Path               | Purpose                                                              |
-| ------------------ | -------------------------------------------------------------------- |
-| `AGENTS.md`        | Primary agent entry point — mission, directives, Ralph Loop protocol |
-| `ARCHITECTURE.md`  | Dependency layers and structural invariants                          |
-| `QUALITY_SCORE.md` | Definition of "Done" and exit criteria                               |
-| `SECURITY.md`      | Security invariants and compliance references                        |
-| `RELIABILITY.md`   | Monitoring, alerting, and error handling policy                      |
-| `PLANS.md`         | Active roadmap and execution strategy                                |
-| `PRODUCT_SENSE.md` | Target audience and core value proposition                           |
-| `DESIGN.md`        | Aesthetic and design system principles                               |
-| `FRONTEND.md`      | Technical stack and component guidelines                             |
-| `docs/`            | Documentation engine (specs, plans, design docs, references)         |
-| `workforce/`       | Agent onboarding system (templates, skills, manifests)               |
-| `scripts/`         | CLI tools (workforce.py)                                             |
-
-## Available Skills
-
-Skills live in `workforce/agent-template/skills/` and are synced into each agent's context folder on `hire`.
-
-| Skill                         | Type          | Purpose                                         |
-| ----------------------------- | ------------- | ----------------------------------------------- |
-| `git-commit`                  | Instructional | Conventional commit messages                    |
-| `git-pr-creator`              | Instructional | Structured PR creation                          |
-| `git-worktrees`               | Instructional | Git worktree workflow for parallel tasks        |
-| `spec-prd-creator`            | Instructional | Generate PRDs from intent                       |
-| `spec-implementation-planner` | Instructional | Break PRDs into incremental exec plans          |
-| `spec-adr-manager`            | Instructional | Create and manage Architecture Decision Records |
-| `spec-peer-reviewer`          | Instructional | Agent-to-agent peer review                      |
-| `ralph-loop-runner`           | Instructional | Autonomous Ralph Loop execution                 |
 
 ## The Ralph Loop
 
@@ -209,6 +120,50 @@ The goal is to maximize **Agent Legibility** — ensuring that an AI agent can u
 4. **Remediation Instructions**: When a linter fails, include the exact command the agent needs to run to fix it.
 5. **Elevate to Code**: If a documentation rule is repeatedly ignored, enforce it in code or a custom linter.
 
-## Contributing
+## Harness Contents
+
+| Path               | Purpose                                                              |
+| ------------------ | -------------------------------------------------------------------- |
+| `AGENTS.md`        | Primary agent entry point — mission, directives, Ralph Loop protocol |
+| `ARCHITECTURE.md`  | Dependency layers and structural invariants                          |
+| `QUALITY_SCORE.md` | Definition of "Done" and exit criteria                               |
+| `SECURITY.md`      | Security invariants and compliance references                        |
+| `RELIABILITY.md`   | Monitoring, alerting, and error handling policy                      |
+| `PLANS.md`         | Active roadmap and execution strategy                                |
+| `PRODUCT_SENSE.md` | Target audience and core value proposition                           |
+| `DESIGN.md`        | Aesthetic and design system principles                               |
+| `FRONTEND.md`      | Technical stack and component guidelines                             |
+| `docs/`            | Documentation engine (specs, plans, design docs, references)         |
+| `.workforce/`      | Agent onboarding system (templates, skills, manifests)               |
+
+## Available Skills
+
+Skills live in `.workforce/agent-template/skills/` and are synced into each agent's context folder on `hire`.
+
+| Skill                         | Type          | Purpose                                         |
+| ----------------------------- | ------------- | ----------------------------------------------- |
+| `git-commit`                  | Instructional | Conventional commit messages                    |
+| `git-pr-creator`              | Instructional | Structured PR creation                          |
+| `git-worktrees`               | Instructional | Git worktree workflow for parallel tasks        |
+| `spec-prd-creator`            | Instructional | Generate PRDs from intent                       |
+| `spec-implementation-planner` | Instructional | Break PRDs into incremental exec plans          |
+| `spec-adr-manager`            | Instructional | Create and manage Architecture Decision Records |
+| `spec-peer-reviewer`          | Instructional | Agent-to-agent peer review                      |
+| `ralph-loop-runner`           | Instructional | Autonomous Ralph Loop execution                 |
+
+## Scaffold Development
 
 This repo dogfoods the harness pattern — root governance files describe how to build the scaffold, while `harness/` contains the template product. See `docs/` for scaffold PRDs and exec plans.
+
+| Folder                  | Purpose                                                      |
+| ----------------------- | ------------------------------------------------------------ |
+| `product-specs/`        | PRDs for scaffold features (e.g., the hire/fire CLI utility) |
+| `exec-plans/active/`    | Implementation plans currently being worked on               |
+| `exec-plans/completed/` | Archived plans for delivered scaffold features               |
+| `design-docs/`          | Technical design documents for scaffold architecture         |
+| `generated/`            | Auto-generated scaffold artifacts                            |
+| `references/`           | LLM-readable references specific to scaffold development     |
+
+## Contributing
+
+This repo uses the harness pattern for its own development. Start with `AGENTS.md` and `docs/exec-plans/active/` to find open work.
