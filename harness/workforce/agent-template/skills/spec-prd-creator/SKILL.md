@@ -65,7 +65,9 @@ This lets users respond with "1A, 2C, 3B" for quick iteration. Remember to inden
 
 ## Step 2: PRD Structure
 
-Generate the PRD with these sections:
+Generate the PRD with these sections.
+
+Include an overall status at the top of the PRD: `**Status:** draft | approved | in-progress | complete`
 
 ### 1. Problem Statement
 
@@ -102,6 +104,8 @@ Each story should be small enough to implement in one focused session.
 
 ```markdown
 ### US-001: [Title]
+
+**Status:** pending
 
 **Description:** As a [user], I want [feature] so that [benefit].
 
