@@ -10,10 +10,11 @@ import sys
 from pathlib import Path
 from typing import Dict, Tuple
 
-ROOT = Path(__file__).resolve().parent.parent          # harness/
-REPO_ROOT = ROOT.parent                                 # project root (one level above harness/)
-TEMPLATES_DIR = ROOT / "workforce" / "templates"
-SKILLS_SOURCE_DIR = ROOT / "workforce" / "agent-template" / "skills"
+WORKFORCE_DIR = Path(__file__).resolve().parent          # harness/.workforce/
+ROOT = WORKFORCE_DIR.parent                              # harness/
+REPO_ROOT = ROOT.parent                                  # project root (one level above harness/)
+TEMPLATES_DIR = WORKFORCE_DIR / "templates"
+SKILLS_SOURCE_DIR = WORKFORCE_DIR / "agent-template" / "skills"
 AUTO_HEADER = "<!-- AUTO-GENERATED: DO NOT EDIT -->"
 REQUIRED_MANIFEST_FIELDS = (
     "agent_name",
